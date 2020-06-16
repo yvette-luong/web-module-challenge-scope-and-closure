@@ -28,10 +28,15 @@ function processFirstItem(stringList, callback) {
  * 
  * 1. What is the difference between counter1 and counter2?
  * 
+ * - counter 1 contain a function as child 
+ * 
  * 2. Which of the two uses a closure? How can you tell?
  * 
+ * - counter 1 uses closure because the inner function have to access variables from a higher level scope and nested inside it 
+ * 
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
- *
+ * - counter1 would be preferable if in the situation which we want to reuse the code already identified.
+ * - counter2 woule be better if we want that function being passed into the parent function	 
 */
 
 // counter1 code
@@ -56,18 +61,22 @@ function counter2() {
 
 Write a function called `inning` that generates a random number of points that a team scored in an inning. This should be a whole number between 0 and 2. */
 
-function inning(/*Code Here*/){
+function inning(){
 
-    /*Code Here*/
+    return Math.floor(Math.random()* 2) ;
 
 }
+// console.log(inning());
+
 
 /* Task 3: finalScore()
 
-Write a higher order function called `finalScore` that accepts the callback function `inning` (from above) and a number of innings and and returns the final score of the game in the form of an object.
+Write a higher order function called `finalScore` that accepts 
+the callback function `inning` (from above) and 
+a number of innings and 
+and returns the final score of the game in the form of an object.
 
 For example, 
-
 finalScore(inning, 9) might return: 
 {
   "Home": 11,
@@ -76,11 +85,19 @@ finalScore(inning, 9) might return:
 
 */ 
 
-function finalScore(/*code Here*/){
+function finalScore(inning, inningsNum){
 
-  /*Code Here*/
+  let score = {homeTeam:0, awayTeam:0} 
 
+  for (let i = 0; i < inningsNum; i ++){
+    score.homeTeam  += inning();
+    score.awayTeam  += inning();
+  }
+  return score ; 
 }
+
+
+// console.log(finalScore(inning, 9))
 
 /* Task 4: 
 
@@ -103,8 +120,20 @@ and returns the score at each pont in the game, like so:
 
 Final Score: 6 - 10 */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function scoreboard(inning, numOfInnings) {
+  let numOfinnings = 0 
+  let homeScore    = 0
+  let awayScore    = 0
+  let currentInningCount = 0 
+
+  while (currentInningCount < numOfInnings) {
+    currentInningCount += 1 
+    homeScore +=  inning()
+    awayScore +=  inning()
+
+    console.log( `${currentInningCount} inning: ${homeScore} - ${awayScore}`)
+  }
+  return `Final Score: ${homeScore} - ${awayScore}`;
 }
 
-
+console.log(scoreboard(inning, 9))
